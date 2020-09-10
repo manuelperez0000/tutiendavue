@@ -41,10 +41,15 @@ export default {
             })
             .then(res => {
                 this.spin=false
-                window.location.href = "/mitienda"
+                console.log(res.data)
+                if(res.data.estado == "true"){
+                    window.location.href = "/mitienda"
+                }else{
+                    alert("Usuario o contraseña invalidos")
+                }
             })
             .catch(err =>{
-                this.$toasted.error('Ocurrio un problema intente nuevamente',{duration:2000,position:'top-center',fullWidth:true})
+                this.$toasted.error('Ocurrio un problema intente nuevamente',{duration:4000,position:'top-center',fullWidth:true})
             })
             
         }

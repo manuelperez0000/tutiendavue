@@ -35,13 +35,17 @@ export default {
         .then(res =>{
             this.uid = res.data.uid
             var id = res.data.uid
-            
-            axios.post('/api/mitienda',{uid:id})
+             
+            axios.get('/api/mitienda/',{
+                params: {
+                id: 123456
+                }
+            })
             .then(res =>{
                 this.urlactual = res.data.urlunico
                 this.nombre = res.data.nombre
                 this.banner = res.data.banner
-
+               /// console.log(JSON.stringify(res))
             }).catch(err => {
                this.$toasted.error(err,{duration:6000,position:'top-center',fullWidth:true})
                console.log(err)

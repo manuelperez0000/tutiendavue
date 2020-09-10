@@ -49,7 +49,7 @@ export default {
                 window.location.href = "/"
             })
             .catch(err => alert(err.message))
-        }
+        } 
     },
     components:{
         Navegador

@@ -5,15 +5,12 @@
      <div class="container">
     <div class="row bg-white rounded shadow">
         <div class="col-sm-10 col-md-8 p-4">
-            <p>Id: {{ uid }}</p>
             <form @submit.prevent="guardarTienda()">
-                
             <label class="" for="nombre"><h4>Url personalizada</h4></label><br>
-            <label for="">Url actual: <div class="url"> /{{ urlactual }} </div></label>
-            <label>No se pueden usar caracteres especiales en tu url</label>
+            <label for="">Url actual: <a href="#" @click="irtienda()" class="url env">/{{ urlactual }} </a></label>
+            <p>Recuerda que no se pueden usar caracteres especiales en tu url</p>
             
             <input required pattern="[A-Za-z0-9-]{1,40}" spellcheck="false" v-model="url" v-on:keyup="verificaurl()" class="form-control" v-bind:class="[moderno]" type="text" name="url" id="url" title="No se pueden usar caracteres especiales en tu url" placeholder="Ingrese el su url de preferencia" autocomplete="off">
-
             
             <label v-if="verif == true" class="text-success"> <i class="fas fa-check"> </i> Disponible</label>
             <label v-if="verif == false" class="text-danger"><i class="fas fa-exclamation-triangle"></i> No esta Disponible: {{ error }}</label>
@@ -29,6 +26,10 @@
 </template>
 <style>
     body{ background: #ddd }
+    .env:hover{
+        cursor: pointer;
+        color: rgb(47, 112, 112);
+    }
 </style>
 
 <script>
@@ -55,16 +56,17 @@ export default {
 
             var estado = res.data.estado
             var email = res.data.email
-            var uid = res .data.uid 
+            var uid = res.data.uid 
             this.uid = uid
-            this.url = this.urlactual
+            
           
             if(estado != true){
                 //window.location.href = "/"
             }
 
-            axios.post('/api/mitienda',{uid:uid})
+            axios.get('/api/mitienda')
             .then(res =>{
+                console.log(res.data.urlunico)
                 this.urlactual = res.data.urlunico
 
             }).catch(err => {
@@ -77,6 +79,9 @@ export default {
         })
     },
     methods:{
+        irtienda(){
+            window.location.href = "./"+this.urlactual
+        },
         verificaurl(){
             //paso 1 reemplazar espacios por guiones
             var url = this.url
